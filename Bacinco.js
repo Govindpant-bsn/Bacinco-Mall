@@ -3,6 +3,23 @@
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- Page load curtain ---------- */
+  const loader = document.getElementById('loader');
+  function hideLoader() {
+    if (!loader) return;
+    loader.classList.add('is-hidden');
+    setTimeout(() => loader.remove(), 700);
+  }
+  if (reduceMotion) {
+    hideLoader();
+  } else if (document.readyState === 'complete') {
+    setTimeout(hideLoader, 500);
+  } else {
+    window.addEventListener('load', () => setTimeout(hideLoader, 500));
+    // Safety net: never let the loader block the page for more than 2.5s
+    setTimeout(hideLoader, 2500);
+  }
+
   /* ---------- Scroll progress / day bar ---------- */
   const daybarFill = document.getElementById('daybarFill');
   function updateDaybar() {
@@ -13,10 +30,26 @@
     daybarFill.style.width = pct + '%';
   }
 
-  /* ---------- Nav hide/reveal + scrolled state ---------- */
+  /* ---------- Nav hide/reveal + scrolled state + active link ---------- */
   const nav = document.getElementById('siteNav');
+  const navLinks = document.querySelectorAll('[data-nav-link]');
+  const sections = Array.from(navLinks)
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
   let lastY = window.scrollY;
   let ticking = false;
+
+  function updateActiveLink() {
+    const y = window.scrollY + window.innerHeight * 0.35;
+    let current = null;
+    sections.forEach(sec => {
+      if (sec.offsetTop <= y) current = sec;
+    });
+    navLinks.forEach(a => {
+      const target = document.querySelector(a.getAttribute('href'));
+      a.classList.toggle('is-active', target === current);
+    });
+  }
 
   function onScroll() {
     const y = window.scrollY;
@@ -29,6 +62,8 @@
     }
     lastY = y;
     updateDaybar();
+    updateActiveLink();
+    updateBackToTop();
     ticking = false;
   }
 
@@ -178,5 +213,64 @@
       setTimeout(() => successMsg.classList.remove('is-visible'), 6000);
     }, 1100);
   });
+
+  /* ---------- Back to top ---------- */
+  const backToTop = document.getElementById('backToTop');
+  function updateBackToTop() {
+    if (!backToTop) return;
+    backToTop.classList.toggle('is-visible', window.scrollY > 600);
+  }
+  backToTop?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+
+  /* ---------- FAQ accordion ---------- */
+  document.querySelectorAll('.faq-item__trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const item = trigger.closest('.faq-item');
+      const panel = item.querySelector('.faq-item__panel');
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+      // Close any other open FAQ item for a clean single-open accordion
+      document.querySelectorAll('.faq-item__trigger[aria-expanded="true"]').forEach(other => {
+        if (other !== trigger) {
+          other.setAttribute('aria-expanded', 'false');
+          other.closest('.faq-item').querySelector('.faq-item__panel').style.maxHeight = null;
+        }
+      });
+
+      trigger.setAttribute('aria-expanded', String(!isOpen));
+      panel.style.maxHeight = isOpen ? null : panel.scrollHeight + 'px';
+    });
+  });
+
+  /* ---------- Newsletter form ---------- */
+  const newsletterForm = document.getElementById('newsletterForm');
+  if (newsletterForm) {
+    const newsletterEmail = document.getElementById('newsletterEmail');
+    const newsletterSubmit = document.getElementById('newsletterSubmit');
+    const newsletterSuccess = document.getElementById('newsletterSuccess');
+
+    newsletterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newsletterEmail.value.trim());
+      if (!valid) {
+        newsletterEmail.focus();
+        newsletterEmail.style.borderColor = 'var(--red-deep)';
+        return;
+      }
+      newsletterEmail.style.borderColor = '';
+      newsletterSubmit.classList.add('is-loading');
+      newsletterSubmit.disabled = true;
+
+      setTimeout(() => {
+        newsletterSubmit.classList.remove('is-loading');
+        newsletterSubmit.disabled = false;
+        newsletterSuccess.classList.add('is-visible');
+        newsletterForm.reset();
+        setTimeout(() => newsletterSuccess.classList.remove('is-visible'), 6000);
+      }, 900);
+    });
+  }
 
 })();

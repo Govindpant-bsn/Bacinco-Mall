@@ -4,24 +4,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bacinco-Mall — Shop, Dine, Discover</title>
+  <title>Bacinco Mall — Shop, Dine, Discover</title>
   <meta name="description"
     content="Bacinco Mall brings together the city's best shopping, dining, and entertainment under one roof. Open every day, free parking, family friendly.">
   <meta property="og:title" content="Bacinco Mall — Shop, Dine, Discover">
   <meta property="og:description" content="Shopping, dining, and entertainment under one roof.">
   <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0B0B0D">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="icon" type="image/png" href="favicon.png">
   <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="Bacinco.css">
+
 </head>
 
 <body>
 
   <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Page load curtain -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <span class="loader__mark">Bacinco<span>.</span></span>
+  </div>
 
   <!-- Scroll progress / "time of day" indicator -->
   <div class="daybar" aria-hidden="true">
@@ -32,11 +38,12 @@
     <div class="nav__inner">
       <a href="#top" class="nav__logo">Bacinco<span>.</span></a>
       <nav class="nav__links" aria-label="Primary">
-        <a href="#day">The Day</a>
-        <a href="#stores">Stores</a>
-        <a href="#dine">Dine</a>
-        <a href="#events">Events</a>
-        <a href="#visit">Visit</a>
+        <a href="#day" data-nav-link>The Day</a>
+        <a href="#stores" data-nav-link>Stores</a>
+        <a href="#dine" data-nav-link>Dine</a>
+        <a href="#events" data-nav-link>Events</a>
+        <a href="#faq" data-nav-link>FAQ</a>
+        <a href="#visit" data-nav-link>Visit</a>
       </nav>
       <a href="#visit" class="nav__cta">Get Directions</a>
       <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false"
@@ -49,6 +56,7 @@
       <a href="#stores">Stores</a>
       <a href="#dine">Dine</a>
       <a href="#events">Events</a>
+      <a href="#faq">FAQ</a>
       <a href="#visit">Visit</a>
       <a href="#visit" class="mobile-menu__cta">Get Directions</a>
     </div>
@@ -59,12 +67,13 @@
     <!-- HERO -->
     <section class="hero" id="top">
       <div class="hero__bg" aria-hidden="true">
-        <div class="blob blob--1"></div>
-        <div class="blob blob--2"></div>
+        <div class="hero__glow hero__glow--1"></div>
+        <div class="hero__glow hero__glow--2"></div>
+        <div class="hero__grid"></div>
         <div class="hero__grain"></div>
       </div>
       <div class="hero__inner">
-        <p class="eyebrow reveal">Open daily · 10am – 10pm</p>
+        <p class="eyebrow eyebrow--light reveal">Open daily · 10:00 — 22:00</p>
         <h1 class="hero__title">
           <span class="reveal-line"><span>One place.</span></span>
           <span class="reveal-line"><span>Every reason</span></span>
@@ -78,7 +87,7 @@
           <a href="#stores" class="btn btn--primary magnetic">
             <span>Explore the mall</span>
           </a>
-          <a href="https://wa.me/9848783852" target="_blank" rel="noopener" class="btn btn--ghost magnetic">
+          <a href="https://wa.me/9848783852" target="_blank" rel="noopener" class="btn btn--ghost-light magnetic">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path
                 d="M17.6 6.3A8.8 8.8 0 0 0 3.5 16.9L2 22l5.2-1.4A8.8 8.8 0 0 0 17.6 6.3ZM12 19.4a7.4 7.4 0 0 1-3.8-1l-.3-.2-2.9.8.8-2.8-.2-.3A7.4 7.4 0 1 1 12 19.4Z"
@@ -87,15 +96,31 @@
             <span>Chat on WhatsApp</span>
           </a>
         </div>
-        <div class="hero__stats reveal">
-          <div class="stat"><span class="stat__num" data-count="180">0</span><span class="stat__label">Stores</span>
-          </div>
-          <div class="stat"><span class="stat__num" data-count="24">0</span><span class="stat__label">Dining
-              spots</span></div>
-          <div class="stat"><span class="stat__num" data-count="7">0</span><span class="stat__label">Days a week</span>
-          </div>
+      </div>
+
+      <!-- Spec-sheet stat strip — signature element -->
+      <div class="specsheet reveal">
+        <div class="specsheet__item">
+          <span class="specsheet__num" data-count="180">000</span>
+          <span class="specsheet__label">Stores</span>
+        </div>
+        <div class="specsheet__div" aria-hidden="true"></div>
+        <div class="specsheet__item">
+          <span class="specsheet__num" data-count="24">00</span>
+          <span class="specsheet__label">Kitchens</span>
+        </div>
+        <div class="specsheet__div" aria-hidden="true"></div>
+        <div class="specsheet__item">
+          <span class="specsheet__num" data-count="7">0</span>
+          <span class="specsheet__label">Days / week</span>
+        </div>
+        <div class="specsheet__div" aria-hidden="true"></div>
+        <div class="specsheet__item">
+          <span class="specsheet__num" data-count="1200">0000</span>
+          <span class="specsheet__label">Free parking</span>
         </div>
       </div>
+
       <div class="hero__scrollcue" aria-hidden="true">
         <span>Scroll to follow a day at Bacinco</span>
         <div class="scrollcue__line"></div>
@@ -304,7 +329,7 @@
     <!-- DINE -->
     <section class="dine" id="dine">
       <div class="section-head section-head--light">
-        <p class="eyebrow reveal">Eat &amp; drink</p>
+        <p class="eyebrow eyebrow--light reveal">Eat &amp; drink</p>
         <h2 class="reveal">24 places to eat, none of them the same.</h2>
         <p class="reveal">From quick bites between errands to a proper sit-down dinner with a view — the food court
           covers fast and easy, while the rooftop restaurants are built for lingering.</p>
@@ -381,6 +406,107 @@
       </div>
     </section>
 
+    <!-- TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+      <div class="section-head section-head--light">
+        <p class="eyebrow eyebrow--light reveal">From our visitors</p>
+        <h2 class="reveal">People keep coming back.</h2>
+      </div>
+      <div class="testimonial-track reveal">
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"I came for one thing and stayed for dinner and a movie. Easiest plan-free day out we've had in months."
+          </p>
+          <span class="testimonial-card__name">Priya M.</span>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"The rooftop restaurants at sunset are genuinely the best view in the city. Booked again the next weekend."
+          </p>
+          <span class="testimonial-card__name">Anish R.</span>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p>"Free parking and a play corner for my kids — it's the only mall I actually look forward to visiting."</p>
+          <span class="testimonial-card__name">Sarita K.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+      <div class="section-head">
+        <p class="eyebrow reveal">Good to know</p>
+        <h2 class="reveal">Frequently asked questions.</h2>
+      </div>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-item__trigger" aria-expanded="false">
+            <span>What time does Bacinco Mall open and close?</span>
+            <svg viewBox="0 0 24 24" fill="none" class="faq-item__icon">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="faq-item__panel">
+            <p>The mall is open every day from 10:00am to 10:00pm. Café row on the ground floor opens earlier, from
+              7:00am, for early starts.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-item__trigger" aria-expanded="false">
+            <span>Is parking really free?</span>
+            <svg viewBox="0 0 24 24" fill="none" class="faq-item__icon">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="faq-item__panel">
+            <p>Yes — covered parking with 1,200 spaces is free for every visitor, with no minimum spend or validation
+              needed.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-item__trigger" aria-expanded="false">
+            <span>Do I need to book the rooftop restaurants?</span>
+            <svg viewBox="0 0 24 24" fill="none" class="faq-item__icon">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="faq-item__panel">
+            <p>Walk-ins are welcome, but tables fill quickly from 6pm on weekends — message us on WhatsApp and we'll
+              help you book ahead.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-item__trigger" aria-expanded="false">
+            <span>Is the mall stroller and wheelchair friendly?</span>
+            <svg viewBox="0 0 24 24" fill="none" class="faq-item__icon">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="faq-item__panel">
+            <p>Yes — every floor is step-free with lifts, and free stroller and wheelchair loans are available at the
+              main entrance.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-item__trigger" aria-expanded="false">
+            <span>What's the best way to reach you with a question?</span>
+            <svg viewBox="0 0 24 24" fill="none" class="faq-item__icon">
+              <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+          <div class="faq-item__panel">
+            <p>WhatsApp is fastest for same-day questions. For anything else, email us and we'll reply within a day.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- VISIT / CONTACT -->
     <section class="visit" id="visit">
       <div class="visit__grid">
@@ -420,6 +546,21 @@
               <span>Send an email</span>
             </a>
           </div>
+
+          <!-- Newsletter -->
+          <form class="newsletter reveal" id="newsletterForm" novalidate>
+            <label for="newsletterEmail">Get the events calendar by email</label>
+            <div class="newsletter__row">
+              <input type="email" id="newsletterEmail" name="newsletterEmail" placeholder="you@email.com" required
+                autocomplete="email">
+              <button type="submit" class="btn btn--primary magnetic" id="newsletterSubmit">
+                <span class="btn__label">Subscribe</span>
+                <span class="btn__spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+            <p class="newsletter__success" id="newsletterSuccess" role="status">You're in — watch your inbox for what's
+              on.</p>
+          </form>
         </div>
 
         <form class="visit__form reveal" id="contactForm" novalidate>
@@ -466,6 +607,26 @@
       <div class="footer__brand">
         <a href="#top" class="nav__logo">Bacinco<span>.</span></a>
         <p>Shopping, dining, and entertainment, together under one roof.</p>
+        <div class="footer__social" aria-label="Social media">
+          <a href="#" aria-label="Bacinco Mall on Instagram" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6" />
+              <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6" />
+              <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" />
+            </svg>
+          </a>
+          <a href="#" aria-label="Bacinco Mall on Facebook" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M14 9h2.5V6H14c-1.66 0-3 1.34-3 3v2H9v3h2v7h3v-7h2.2l.8-3H14V9Z" stroke="currentColor"
+                stroke-width="1.4" stroke-linejoin="round" />
+            </svg>
+          </a>
+          <a href="#" aria-label="Bacinco Mall on X" class="social-icon">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 4l16 16M20 4 4 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </a>
+        </div>
       </div>
       <div class="footer__col">
         <h4>Explore</h4>
@@ -473,6 +634,7 @@
         <a href="#stores">Stores</a>
         <a href="#dine">Dine</a>
         <a href="#events">Events</a>
+        <a href="#faq">FAQ</a>
       </div>
       <div class="footer__col">
         <h4>Contact</h4>
@@ -484,6 +646,14 @@
       <p>&copy; 2026 Bacinco Mall. All rights reserved.</p>
     </div>
   </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none">
+      <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
+    </svg>
+  </button>
 
   <script src="Bacinco.js"></script>
 </body>
